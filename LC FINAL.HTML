@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LC Format Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      margin: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px 0;
+    }
+    th, td {
+      text-align: left;
+      border: 1px solid #ccc;
+      padding: 8px;
+      vertical-align: top;
+    }
+    th {
+      text-align: left;
+      padding: 10px;
+      border: 1px solid #ddd;
+      vertical-align: top;
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      padding: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    textarea {
+      width: 100%;
+      resize: none;
+    }
+    .submit-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+    .checkbox-container {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .checkbox-container label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .checkbox-container input {
+      margin: 0;
+    }
+    .language-selector {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="language-selector">
+      <label for="language-select">Choose Language: </label>
+      <select id="language-select" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="de">German</option>
+      </select>
+    </div>
+
+    <h2 id="form-title">Draft LC Format (MT 700)</h2>
+    <form id="lc-form">
+      <table>
+        <tr>
+          <th>27</th>
+          <td id="sequence-total">Sequence of Total:</td>
+          <td>1/1</td>
+        </tr>
+        <tr>
+          <th>40A</th>
+          <td id="type-of-lc">Type of LC:</td>
+          <td>
+            <select name="type">
+              <option value="irrevocable">Irrevocable</option>
+              <option value="irrevocable-transferable">Irrevocable & Transferable</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <th>31C</th>
+          <td id="date-of-issue">Date of Issue</td>
+          <td><input type="text" name="issue-date"></td>
+        </tr>
+        <tr>
+          <th>20</th>
+          <td id="letter-of-credit-number">Letter of Credit Number:</td>
+          <td><input type="text" name="credit-number"></td>
+        </tr>
+        <tr>
+          <th>31D</th>
+          <td id="date-expiry">Date and Place of Expiry:</td>
+          <td>
+            <input type="text" name="expiry-date" placeholder="Date">
+            <input type="text" name="expiry-place" placeholder="Place">
+          </td>
+        </tr>
+        <tr>
+          <th>50</th>
+          <td id="applicant-address">Name and Address of Applicant:</td>
+          <td><textarea name="applicant-address" rows="3"></textarea></td>
+        </tr>
+        <tr>
+          <th>59</th>
+          <td id="beneficiary-address">Name and Address of Beneficiary:</td>
+          <td><textarea name="beneficiary-address" rows="3"></textarea></td>
+        </tr>
+        <tr>
+          <th>32B</th>
+          <td id="currency-amount">Currency & Amount of LC:</td>
+          <td><input type="text" name="currency-amount"></td>
+        </tr>
+        <tr>
+          <th>39A</th>
+          <td id="variations">Variations in L/C Amount or addl. Amounts permitted</td>
+          <td><input type="text" name="variations"></td>
+        </tr>
+        <tr>
+          <th>41A</th>
+          <td id="credit-available">Credit available with</td>
+          <td><input type="text" name="credit-available"></td>
+        </tr>
+        <tr>
+          <th>32B</th>
+          <td id="currency-amount-2">Currency & Amount of LC:</td>
+          <td><input type="text" name="currency-amount"></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td id="credit-available-by">Credit available by:</td>
+          <td>
+            <div class="checkbox-container">
+              <label for="Payment"><input type="checkbox" name="credit-type" value="Payment"><span id="Payment">Payment</span></label>
+              <label><input type="checkbox" name="credit-type" value="Negotiation"><span id="Negotiation">Negotiation</span></label>
+              <label><input type="checkbox" name="credit-type" value="Acceptance"><span id="Acceptance">Acceptance</span></label>
+              <label><input type="checkbox" name="credit-type" value="By Deferred Payment"><span id="By Deferred Payment"> By Deferred Payment</span></label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>42C</th>
+          <td id="usance-drafts">Usance of Drafts</td>
+          <td>
+            <div class="checkbox-container">
+              <label><input type="checkbox" name="usance" value="[v] at Sight (specify)"> [v] at Sight (specify)</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>42B</th>
+          <td id="deferred-payment">Deferred Payment, if any</td>
+          <td><input type="text" name="port-loading"></td>
+        </tr>
+        <tr>
+          <th>43P</th>
+          <td id="partial-shipments">Partial Shipments</td>
+          <td>
+            <div class="checkbox-container">
+              <label>
+                <input type="checkbox" name="permit" value="Permitted"> 
+                <span id="permitted-label-en">Permitted</span> 
+                 
+              </label>
+              <label>
+                <input type="checkbox" name="prohibit" value="Prohibited"> 
+                <span id="prohibited-label-en">Prohibited</span> 
+                
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>44A</th>
+          <td id="shipments-from">Shipments from</td>
+          <td><input type="text" name="port-loading"></td>
+        </tr>
+        <tr>
+          <th>44E</th>
+          <td id="port-loading">Port of Loading / Airport of Departure:</td>
+          <td><input type="text" name="port-loading"></td>
+        </tr>
+        <tr>
+          <th>44F</th>
+          <td id="port-discharge">Port of Discharge / Destination:</td>
+          <td>
+            <div class="checkbox-container">
+              <label><input type="checkbox" name="place1" value="Nhavesheva"> Nhavesheva</label>
+              <label><input type="checkbox" name="place2" value="Chennai"> Chennai</label>
+              <label><input type="checkbox" name="place3" value="Hyberabad Airport, India"> Hyberabad Airport, India</label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>44B</th>
+          <td id="place-of-destination">Place of Final Destination/ For Transport</td>
+          <td><input type="text" name="place"></td>
+        </tr>
+        <tr>
+          <th>44C</th>
+          <td id="latest-shipment">Latest Shipment Date</td>
+          <td>
+            <textarea name="latest-shipment" rows="9" placeholder="(Shall be filled in as per the PO/Contract inline with Tender delivery condition)"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <th>45A</th>
+          <td id="description-goods">Description of Goods (Also indicate whether FOB/CIF/C&F etc.)</td>
+          <td><input type="text" name="place"></td>
+        </tr>
+        <tr>
+          <th>46A</th>
+          <td id="description-2">Description of Goods (Also indicate whether FOB/CIF/C&F etc.)</td>
+          <td><input type="text" name="place"></td>
+        </tr>
+        <tr>
+          <th></th>
+          <td></td>
+          <td>
+            <div class="checkbox-container">
+              <label><input type="checkbox" name="Desc" value="Description of Materials"> <span id="materials-label">Description of Materials</span></label>
+              <label><input type="checkbox" name="Desc" value="Size (in mm) (except for Pig Iron) and Quantity (in MT)"> <span id="size-label">Size (in mm) (except for Pig Iron) and Quantity (in MT)</span></label>
+              <label><input type="checkbox" name="Desc" value="Specification"> <span id="specification-label">Specification</span></label>
+              <label><input type="checkbox" name="Desc" value="Tolerance (except for Pig Iron)"> <span id="tolerance-label">Tolerance (except for Pig Iron)</span></label>
+              <label><input type="checkbox" name="Desc" value="Quantity"> <span id="quantity-label">Quantity</span></label>
+              <label><input type="checkbox" name="Desc" value="Quantity Tolerance"> <span id="quantityTolerance-label">Quantity Tolerance</span></label>
+              <label><input type="checkbox" name="Desc" value="Price per MT (in USD)"> <span id="price-label">Price per MT (in USD)</span></label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>47A</th>
+          <td id="additional-conditions">Additional Conditions</td>
+        </tr>
+        <tr>
+          <th></th>
+          <td></td>
+          <td>
+            <div class="checkbox-container">
+              <label>
+                <input type="checkbox" name="Desc" value="Transit insurance to be covered by the opener."> 
+                <span id="transit-insurance-label">Transit insurance to be covered by the opener.</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="All transportation costs after the delivery point would be borne by the opener."> 
+                <span id="transportation-costs-label">All transportation costs after the delivery point would be borne by the opener.</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="Railway Receipt (RR)/Road consignment note/Truck receipt may not evidence the Load port and/or Place of Final Destination"> 
+                <span id="railway-receipt-label">Railway Receipt (RR)/Road consignment note/Truck receipt may not evidence the Load port and/or Place of Final Destination</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="Weight of the material may be shown in Quintals or M/ tonnes or Kilograms in the lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt"> 
+                <span id="weight-material-label">Weight of the material may be shown in Quintals or M/ tonnes or Kilograms in the lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="Weight mentioned in lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt may differ from weight mentioned in other documents"> 
+                <span id="weight-difference-label">Weight mentioned in lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt may differ from weight mentioned in other documents</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="All apparent spelling mistakes/ typographical errors in the LC Documents which do not alter the meaning/ description/ specification/ quality of the goods are acceptable and do not count as discrepancy"> 
+                <span id="spelling-mistakes-label">All apparent spelling mistakes/ typographical errors in the LC Documents which do not alter the meaning/ description/ specification/ quality of the goods are acceptable and do not count as discrepancy</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="Tolerance of +/- …. % is allowed on the total quantity and value as well as tolerance of +/- ….. % is allowed on quantity and value of each size is acceptable"> 
+                <span id="tolerance-label">Tolerance of +/- …. % is allowed on the total quantity and value as well as tolerance of +/- ….. % is allowed on quantity and value of each size is acceptable</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="Any amendment to the letter of credit without the prior written consent of the beneficiary shall not be taken cognizance of, under this letter of credit"> 
+                <span id="amendment-label">Any amendment to the letter of credit without the prior written consent of the beneficiary shall not be taken cognizance of, under this letter of credit</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="No discrepancies will be raised on the basis of details lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt, LUT"> 
+                <span id="discrepancies-label">No discrepancies will be raised on the basis of details lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt, LUT</span>
+              </label>
+              <label>
+                <input type="checkbox" name="Desc" value="TT Reimbursement is allowed at the cost of applicant"> 
+                <span id="tt-reimbursement-label">TT Reimbursement is allowed at the cost of applicant</span>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+            <th>71B</th>
+            <td id="charges">Charges</td>
+            <td id="charges-content">All Bank charges incurred outside India including payment Cable charges, reimbursement charges, etc. shall be borne and paid for by the opener. All Bank charges incurred in India shall be borne and paid for by the beneficiary.</td>
+          </tr>
+          <tr>
+            <th>48</th>
+            <td id="period-presentation">Period of Presentation</td>
+            <td id="period-presentation-content">Within 30 days from the date of Railway Receipt (RR)/Road consignment note/truck receipt.</td>
+          </tr>
+          <tr>
+            <th>49</th>
+            <td id="confirmation-instructions">Confirmation Instructions</td>
+            <td id="confirmation-instructions-content">Paying Bank may add their confirmation to this Letter of Credit at the request and expense of the beneficiary and such confirmation shall also apply to any amendment(s) to this credit.</td>
+          </tr>
+          <tr>
+            <th>53A</th>
+            <td id="reimbursing-bank">Reimbursing Bank</td>
+            <td id="reimbursing-bank-content"></td>
+          </tr>
+          <tr>
+            <th>78</th>
+            <td id="instructions-paying-bank">Instructions to the Paying/Accepting/Negotiating bank</td>
+            <td id="instructions-paying-bank-content">Upon presentation of documents complying in all respects to Letter of Credit terms, the negotiating bank is authorised to claim on reimbursing bank (bank in New York/Europe) by SWIFT certifying that all terms and conditions have been complied with and that the relative documents have been forwarded to us (opening bank in Nepal) by Registered Airmail/ Courier. The Reimbursing bank will remit within three working days after receipt of your swift claim in US Dollars/Euro/any other freely exchangeable currency in accordance with your instructions. This Letter of Credit is subject to the Uniform Customs and Practice for Documentary Credits (2007 Revision) International Chamber of Commerce Brochure No. 600. This telex/swift may be treated as the operative instrument.</td>
+          </tr>
+      </table>
+
+      <button type="submit" class="submit-btn" id="submit-button">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        'permitted-label-en': 'Permitted',
+        'prohibited-label-en': 'Prohibited',
+        'sequence-total': 'Sequence of Total:',
+        'type-of-lc': 'Type of LC:',
+        'date-of-issue': 'Date of Issue',
+        'letter-of-credit-number': 'Letter of Credit Number:',
+        'date-expiry': 'Date and Place of Expiry:',
+        'applicant-address': 'Name and Address of Applicant:',
+        'beneficiary-address': 'Name and Address of Beneficiary:',
+        'currency-amount': 'Currency & Amount of LC:',
+        'variations': 'Variations in L/C Amount or addl. Amounts permitted',
+        'credit-available': 'Credit available with',
+        'credit-available-by': 'Credit available by:',
+        'usance-drafts': 'Usance of Drafts',
+        'deferred-payment': 'Deferred Payment, if any',
+        'partial-shipments': 'Partial Shipments',
+        'shipments-from': 'Shipments from',
+        'port-loading': 'Port of Loading / Airport of Departure:',
+        'port-discharge': 'Port of Discharge / Destination:',
+        'place-of-destination': 'Place of Final Destination/ For Transport',
+        'latest-shipment': 'Latest Shipment Date',
+        'description-goods': 'Description of Goods (Also indicate whether FOB/CIF/C&F etc.)',
+        'additional-conditions': 'Additional Conditions',
+        'additional-payment': 'Additional payment conditions',
+        'submit-button': 'Submit',
+        
+        'form-title': 'Draft LC Format (MT 700)',
+
+        'charges': 'Charges',
+        'charges-content': 'All Bank charges incurred outside India including payment Cable charges, reimbursement charges, etc. shall be borne and paid for by the opener. All Bank charges incurred in India shall be borne and paid for by the beneficiary.',
+        'period-presentation': 'Period of Presentation',
+        'period-presentation-content': 'Within 30 days from the date of Railway Receipt (RR)/Road consignment note/truck receipt.',
+        'confirmation-instructions': 'Confirmation Instructions',
+        'confirmation-instructions-content': 'Paying Bank may add their confirmation to this Letter of Credit at the request and expense of the beneficiary and such confirmation shall also apply to any amendment(s) to this credit.',
+        'reimbursing-bank': 'Reimbursing Bank',
+        'reimbursing-bank-content': '',
+        'instructions-paying-bank': 'Instructions to the Paying/Accepting/Negotiating bank',
+        'instructions-paying-bank-content': 'Upon presentation of documents complying in all respects to Letter of Credit terms, the negotiating bank is authorised to claim on reimbursing bank (bank in New York/Europe) by SWIFT certifying that all terms and conditions have been complied with and that the relative documents have been forwarded to us (opening bank in Nepal) by Registered Airmail/ Courier. The Reimbursing bank will remit within three working days after receipt of your swift claim in US Dollars/Euro/any other freely exchangeable currency in accordance with your instructions. This Letter of Credit is subject to the Uniform Customs and Practice for Documentary Credits (2007 Revision) International Chamber of Commerce Brochure No. 600. This telex/swift may be treated as the operative instrument.',
+        'transit-insurance-label': 'Transit insurance to be covered by the opener.',
+    'transportation-costs-label': 'All transportation costs after the delivery point would be borne by the opener.',
+    'railway-receipt-label': 'Railway Receipt (RR)/Road consignment note/Truck receipt may not evidence the Load port and/or Place of Final Destination',
+    'weight-material-label': 'Weight of the material may be shown in Quintals or M/ tonnes or Kilograms in the lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt',
+    'weight-difference-label': 'Weight mentioned in lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt may differ from weight mentioned in other documents',
+    'spelling-mistakes-label': 'All apparent spelling mistakes/ typographical errors in the LC Documents which do not alter the meaning/ description/ specification/ quality of the goods are acceptable and do not count as discrepancy',
+    'tolerance-label': 'Tolerance of +/- …. % is allowed on the total quantity and value as well as tolerance of +/- ….. % is allowed on quantity and value of each size is acceptable',
+    'amendment-label': 'Any amendment to the letter of credit without the prior written consent of the beneficiary shall not be taken cognizance of, under this letter of credit',
+    'discrepancies-label': 'No discrepancies will be raised on the basis of details lorry receipt(s)/Railway Receipt (RR)/Road consignment note/truck receipt, LUT',
+    'tt-reimbursement-label': 'TT Reimbursement is allowed at the cost of applicant',
+
+      },
+      es: {
+        'permitted-label-en': 'Permitido',
+        'prohibited-label-en': 'Prohibido',
+        'materials-label': 'Descripción de los materiales',
+        'size-label': 'Tamaño (en mm) (excepto para hierro fundido) y cantidad (en MT)',
+        'specification-label': 'Especificación',
+        'tolerance-label': 'Tolerancia (excepto para hierro fundido)',
+        'quantity-label': 'Cantidad',
+        'quantityTolerance-label': 'Tolerancia de cantidad',
+        'price-label': 'Precio por MT (en USD)',
+        'transit-insurance-label': 'El seguro de tránsito será cubierto por el abridor.',
+        'transportation-costs-label': 'Todos los costos de transporte después del punto de entrega serán    asumidos por el abridor.',
+        'railway-receipt-label': 'El Recibo Ferroviario (RR)/Nota de consignación por carretera/Recibo de     camión puede no evidenciar el puerto de carga y/o el lugar de destino final',
+        'weight-material-label': 'El peso del material puede mostrarse en Quintales o M/ toneladas o Kilogramos     en el recibo(s) del camión/Recibo Ferroviario (RR)/Nota de consignación por carretera/recibo del    camión',
+        'weight-difference-label': 'El peso mencionado en el recibo(s) del camión/Recibo Ferroviario (RR)/Nota    de consignación por carretera/recibo del camión puede diferir del peso mencionado en otros documentos',
+        'spelling-mistakes-label': 'Todos los errores ortográficos/tipográficos aparentes en los documentos de    LC que no alteren el significado/descripción/especificación/calidad de las mercancías son aceptables y    no se consideran como discrepancia',
+        'tolerance-label': 'Se permite una tolerancia de +/- …. % sobre la cantidad y el valor totales, así     como una tolerancia de +/- …. % sobre la cantidad y el valor de cada tamaño es aceptable',
+        'amendment-label': 'No se tomará en cuenta ninguna modificación de la carta de crédito sin el     consentimiento previo por escrito del beneficiario, en virtud de esta carta de crédito',
+        'discrepancies-label': 'No se plantearán discrepancias sobre la base de los detalles del recibo(s) del    camión/Recibo Ferroviario (RR)/Nota de consignación por carretera/recibo del camión, LUT',
+        'tt-reimbursement-label': 'Se permite el reembolso TT a cargo del solicitante',   
+
+       'permitted-label-en': 'Permitted',
+        'prohibited-label-en': 'Prohibited',
+        'sequence-total': 'Sequence of Total:',
+        'type-of-lc': 'Type of LC:',
+        'date-of-issue': 'Date of Issue',
+        'letter-of-credit-number': 'Letter of Credit Number:',
+        'date-expiry': 'Date and Place of Expiry:',
+        'applicant-address': 'Name and Address of Applicant:',
+        'beneficiary-address': 'Name and Address of Beneficiary:',
+        'currency-amount': 'Currency & Amount of LC:',
+        'variations': 'Variations in L/C Amount or addl. Amounts permitted',
+        'credit-available': 'Credit available with',
+        'credit-available-by': 'Credit available by:',
+        'usance-drafts': 'Usance of Drafts',
+        'deferred-payment': 'Deferred Payment, if any',
+        'partial-shipments': 'Partial Shipments',
+        'shipments-from': 'Shipments from',
+        'port-loading': 'Port of Loading / Airport of Departure:',
+        'port-discharge': 'Port of Discharge / Destination:',
+        'place-of-destination': 'Place of Final Destination/ For Transport',
+        'latest-shipment': 'Latest Shipment Date',
+        'additional-conditions': 'Condiciones adicionales',
+        'additional-payment': 'Condiciones de pago adicionales',
+        'submit-button': 'Enviar',
+        'Payment': 'Pago',
+        'Negotiation':'Negociación',
+        'Acceptance':'Aceptación',
+        'beneficiary-address': 'Nombre y dirección del beneficiario:',
+
+
+        'form-title': 'Formato de LC Borrador (MT 700)',
+
+        'charges': 'Cargos',
+        'charges-content': 'Todos los cargos bancarios incurridos fuera de la India, incluidos los cargos por cable de pago, los cargos por reembolso, etc., serán asumidos y pagados por el abridor. Todos los cargos bancarios incurridos en la India serán asumidos y pagados por el beneficiario.',
+        'period-presentation': 'Período de presentación',
+        'period-presentation-content': 'Dentro de los 30 días posteriores a la fecha de Recepción Ferroviaria (RR)/nota de consignación por carretera/recibo de camión.',
+        'confirmation-instructions': 'Instrucciones de confirmación',
+        'confirmation-instructions-content': 'El Banco Pagador puede agregar su confirmación a esta Carta de Crédito a solicitud y por cuenta del beneficiario, y dicha confirmación también se aplicará a cualquier enmienda(s) a este crédito.',
+        'reimbursing-bank': 'Banco reembolsador',
+        'reimbursing-bank-content': '',
+        'instructions-paying-bank': 'Instrucciones al banco pagador/aceptante/negociante',
+        'instructions-paying-bank-content': 'Al presentar los documentos que cumplan en todos los aspectos con los términos de la Carta de Crédito, el banco negociador está autorizado a reclamar al banco reembolsador (banco en Nueva York/Europa) por SWIFT certificando que se han cumplido todos los términos y condiciones y que los documentos relativos han sido enviados a nosotros (banco emisor en Nepal) por correo aéreo registrado/servicio de mensajería. El banco reembolsador remitará dentro de tres días hábiles después de recibir su reclamo SWIFT en dólares estadounidenses/euros/cualquier otra moneda libremente convertible, de acuerdo con sus instrucciones. Esta Carta de Crédito está sujeta a las Reglas y Usos Uniformes para Créditos Documentarios (Revisión 2007) de la Cámara Internacional de Comercio Folleto No. 600. Este telex/SWIFT puede considerarse el instrumento operativo.',
+        'Payment':'Pago',
+        'By Deferred Payment':'Por Pago Diferido',
+        
+      },
+      de: {
+        'permitted-label-en': 'Zulässig',
+        'prohibited-label-en': 'Verboten',
+        'Negotiation':'Onderhandeling',
+        'sequence-total': 'Sequenz insgesamt:',
+        'type-of-lc': 'Art des LC:',
+        'beneficiary-address': 'Name und Adresse des Begünstigten:',
+        'materials-label': 'Materialbeschreibung',
+        'size-label': 'Größe (in mm) (außer für Roheisen) und Menge (in MT)',
+        'specification-label': 'Spezifikation',
+        'tolerance-label': 'Toleranz (außer für Roheisen)',
+        'quantity-label': 'Menge',
+        'quantityTolerance-label': 'Mengen Toleranz',
+        'price-label': 'Preis pro MT (in USD)',
+        'transit-insurance-label': 'Die Transitversicherung wird vom Eröffner übernommen.',
+        'transportation-costs-label': 'Alle Transportkosten nach dem Lieferort werden vom Eröffner getragen.',
+        'railway-receipt-label': 'Eisenbahnbescheinigung (RR)/Straßengüterbrief/Lkw-Empfangsbestätigung kann    den Ladehafen und/oder den Bestimmungsort nicht belegen',
+        'weight-material-label': 'Das Gewicht des Materials kann in Quintalen oder M/ Tonnen oder Kilogramm im    Lkw-Beleg(en)/Eisenbahnbescheinigung (RR)/Straßengüterbrief/Lkw-Empfangsbestätigung angegeben werden',
+        'weight-difference-label': 'Das in Lkw-Beleg(en)/Eisenbahnbescheinigung (RR)/Straßengüterbrief/   Lkw-Empfangsbestätigung angegebene Gewicht kann vom in anderen Dokumenten angegebenen Gewicht   abweichen',
+        'spelling-mistakes-label': 'Alle offensichtlichen Rechtschreibfehler/Tippfehler in den LC-Dokumenten,     die die Bedeutung/Beschreibung/Spezifikation/Qualität der Ware nicht verändern, sind akzeptabel und     gelten nicht als Abweichung',
+        'tolerance-label': 'Eine Toleranz von +/- …. % ist für die Gesamtmenge und den Gesamtwert sowie eine    Toleranz von +/- …. % für Menge und Wert jeder Größe zulässig',
+        'amendment-label': 'Jede Änderung des Akkreditivs ohne die vorherige schriftliche Zustimmung des    Begünstigten wird im Rahmen dieses Akkreditivs nicht berücksichtigt',
+        'discrepancies-label': 'Es werden keine Unstimmigkeiten aufgrund der Einzelheiten des Lkw-Belegs(e)/    Eisenbahnbescheinigung (RR)/Straßengüterbrief/Lkw-Empfangsbestätigung, LUT erhoben',
+        'tt-reimbursement-label': 'TT-Rückerstattung ist auf Kosten des Antragstellers zulässig',    
+
+        'permitted-label-en': 'Permitted',
+        'prohibited-label-en': 'Prohibited',
+        'sequence-total': 'Sequence of Total:',
+        'type-of-lc': 'Type of LC:',
+        'date-of-issue': 'Date of Issue',
+        'letter-of-credit-number': 'Letter of Credit Number:',
+        'date-expiry': 'Date and Place of Expiry:',
+        'applicant-address': 'Name and Address of Applicant:',
+        'beneficiary-address': 'Name and Address of Beneficiary:',
+        'currency-amount': 'Currency & Amount of LC:',
+        'variations': 'Variations in L/C Amount or addl. Amounts permitted',
+        'credit-available': 'Credit available with',
+        'credit-available-by': 'Credit available by:',
+        'usance-drafts': 'Usance of Drafts',
+        'deferred-payment': 'Deferred Payment, if any',
+        'partial-shipments': 'Partial Shipments',
+        'shipments-from': 'Shipments from',
+        'port-loading': 'Port of Loading / Airport of Departure:',
+        'port-discharge': 'Port of Discharge / Destination:',
+        'place-of-destination': 'Place of Final Destination/ For Transport',
+        'latest-shipment': 'Latest Shipment Date',
+        'additional-conditions': 'Zusätzliche Bedingungen',
+        'additional-payment': 'Zusätzliche Zahlungsbedingungen',
+        'submit-button': 'Absenden',
+        'form-title': 'Entwurf LC Format (MT 700)',
+        'Payment':'Betaling',
+        'Acceptance':'Accepteren',
+        'By Deferred Payment':'Door Uitgestelde Betaling',
+
+        'charges': 'Gebühren',
+        'charges-content': 'Alle Bankgebühren, die außerhalb Indiens anfallen, einschließlich der Zahlungskosten für Kabel, Erstattungskosten usw., werden vom Antragsteller getragen und bezahlt. Alle Bankgebühren, die in Indien anfallen, werden vom Begünstigten getragen und bezahlt.',
+        'period-presentation': 'Präsentationszeitraum',
+        'period-presentation-content': 'Innerhalb von 30 Tagen ab dem Datum der Eisenbahnbestätigung (RR)/Straßengüterbrief/Maßnahmempfang.',
+        'confirmation-instructions': 'Bestätigungsanweisungen',
+        'confirmation-instructions-content': 'Die zahlende Bank kann auf Anfrage und auf Kosten des Begünstigten ihre Bestätigung zu diesem Akkreditiv hinzufügen, und diese Bestätigung gilt auch für Änderungen des Akkreditivs.',
+        'reimbursing-bank': 'Reimbursing Bank',
+        'reimbursing-bank-content': '',
+        'instructions-paying-bank': 'Anweisungen an die zahlende/akzeptierende/verhandelnde Bank',
+        'instructions-paying-bank-content': 'Bei Vorlage von Dokumenten, die in allen Punkten den Bedingungen des Akkreditivs entsprechen, ist die verhandelnde Bank berechtigt, beim Reimbursing Bank (Bank in New York/Europa) über SWIFT zu fordern und zu bestätigen, dass alle Bedingungen erfüllt sind und dass die entsprechenden Dokumente uns (die eröffnende Bank in Nepal) per Einschreiben/Luftpost/Kurier zugeschickt wurden. Die Reimbursing Bank wird innerhalb von drei Werktagen nach Eingang Ihrer SWIFT-Anforderung in US-Dollar/Euro/jeder anderen frei umtauschbaren Währung gemäß Ihren Anweisungen überweisen. Dieses Akkreditiv unterliegt den Uniform Customs and Practice for Documentary Credits (2007 Revision) der International Chamber of Commerce, Broschüre Nr. 600. Dieser Telex/SWIFT kann als das operative Instrument behandelt werden.',
+      }
+    };
+
+    function changeLanguage() {
+      const selectedLanguage = document.getElementById('language-select').value;
+
+      // Update all elements with translated content
+      Object.entries(translations[selectedLanguage]).forEach(([key, value]) => {
+        const element = document.getElementById(key);
+        if (element) {
+          element.textContent = value;
+        }
+      });
+    }
+</script>
