@@ -1,3 +1,40 @@
+Overview
+
+The Dynamic Document Generator is an application designed to streamline the creation of banking documents by allowing users to drag and drop clauses onto templates, select clauses in multiple languages, and input custom data required to fill the document. The generated documents can be exported as PDF or Word files, ensuring flexibility and usability across different platforms.
+
+Features
+
+Clause Drag-and-Drop: Users can drag and drop text containing clauses onto the template.
+
+Language Support: Clauses can be selected based on the desired language.
+
+Dynamic Data Input: A user-friendly front-end allows data entry for document customization and maps it to marked placeholders in the template.
+
+Document Export: Generate and download the document in PDF and Word formats.
+
+Tech Stack
+
+Frontend
+
+React: For building an interactive and dynamic user interface.
+
+HTML/CSS/JavaScript: For structuring, styling, and adding functionality to forms and components.
+
+Backend
+
+Flask: Lightweight Python framework for handling server-side logic.
+
+MySQL: Database for storing and retrieving clauses and other document-related data.
+
+Tools and Libraries
+
+Word Document Processing Library: Used to process and generate Word documents.
+
+Microsoft PowerPoint: Utilized for creating the presentation.
+
+PDF Library: For exporting the document in PDF format.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
