@@ -42,6 +42,9 @@ Microsoft PowerPoint: Utilized for creating the presentation.
 
 PDF Library: For exporting the document in PDF format.
 
+## Project Structure
+<img width="574" alt="Screenshot 2025-01-19 at 8 14 45 AM" src="https://github.com/user-attachments/assets/ec88baa2-5ae8-4fb2-a32b-a8a4565c4cd9" />
+
 
 # Getting Started with Create React App
 
