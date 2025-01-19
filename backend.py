@@ -1,90 +1,103 @@
 from flask import Flask, request, jsonify, session, render_template, flash,redirect, url_for
 from flask_cors import CORS
-import MySQLdb
+import mysql.connector
 import re
 
 app = Flask(__name__)
 CORS(app)
 app.secret_key = "Hackathon_BNP_Paribas"
 
-database = MySQLdb.connect(
+database = mysql.connector.connect(
     host="localhost",
     user="root",
-    passwd="root",
+    passwd="Pheonix_A2",
     database="bnp_hack"
 )
 cursor = database.cursor()
 
 
 
-@app.route('/signup', methods=['POST'])
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    try:
-        data = request.json
-        name = data.get('name')
-        email = data.get('email')
-        password = data.get('password')
-        cpass = data.get('cpass')
-        phonenum = data.get('phonenum')
-
-        if not all([name, email, password, cpass, phonenum]):
-            flash("error: All fields are required!", "error")
-
-        if not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
-            flash("error: Invalid email format!", "error")
-
-        if not password.isalnum():
-            flash("error: Password must be alphanumeric!", "error")
-
-        if not phonenum.isdigit():
-            flash("error: Phone number must contain only digits!", "error")
-
-        if password != cpass:
-            flash("error: Passwords do not match!", "error")
-
-        cursor.execute("SELECT * FROM SignUp WHERE email = %s OR Phone = %s", (email, phonenum))
-        if cursor.fetchone():
-            flash("error: Email or phone number already exists!", "error")
-
-        signup_query = "INSERT INTO SignUp (Name, email, Pass, Confirm_Pass, Phone) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(signup_query, (name, email, password, cpass, phonenum))
-        database.commit()
-
-        flash("success: Signup successful!", "success")
-        return redirect(url_for(''))
-
-    except Exception as e:
-        database.rollback()
-        flash(f"Signup unsuccessful. Error: {e}", "error")
-        return redirect(url_for(''))
-
-
-@app.route('/login', methods=['POST'])
-def login():
-    try:
-        data = request.json
-        email = data.get('email')
-        password = data.get('password')
-
-        if not email or not password:
-            flash("Email and Password shouldn't be empty", "error")
-
-        login_query = "SELECT * FROM SignUp WHERE email = %s AND Pass = %s"
-        cursor.execute(login_query, (email, password))
-        user = cursor.fetchone()
-
-        if user:
-            session['email'] = email
-            flash("Login successful!", "success")
-            return redirect(url_for(''))
-        else:
-            flash("Email or Password is Wrong!","error")
-            return redirect(url_for(''))
-
-    except Exception as e:
-        flash(f"Login unsuccessful. Error: {e}", "error")
-        return redirect(url_for(''))
     
+        if request.method == 'POST':
+            # Retrieve form data
+            name = request.form['name']
+            email = request.form['email']
+            Pass = request.form['Pass']
+            Confirm_pass = request.form['Confirm_pass']
+            phonenum = request.form['Phone']
+
+            # Validation checks
+            if not all([name, email, Pass, Confirm_pass, phonenum]):
+                flash("error: All fields are required!", "error")
+                return redirect(url_for('signup'))  # Re-render the form with error
+
+            if not re.match(r'^[^@]+@[^@]+\.[^@]+$', email):
+                flash("error: Invalid email format!", "error")
+                return redirect(url_for('signup'))  # Re-render the form with error
+
+            if not Pass.isalnum():
+                flash("error: Password must be alphanumeric!", "error")
+                return redirect(url_for('signup'))  # Re-render the form with error
+
+            if not phonenum.isdigit() or len(phonenum) != 10:
+                flash("error: Invalid phone number format!", "error")
+                return redirect(url_for('signup'))  # Re-render the form with error
+
+            if Pass != Confirm_pass:
+                flash("error: Passwords do not match!", "error")
+                return redirect(url_for('signup'))  # Re-render the form with error
+
+            # Check if the email or phone already exists
+            cursor.execute("SELECT * FROM SignUp WHERE email = %s OR Phone = %s", (email, phonenum))
+            if cursor.fetchone():
+                flash("error: Email or phone number already exists!", "error")
+                return redirect(url_for('signup'))  # Re-render the form with error
+
+            # Insert new user into the database (Do not store Confirm_pass)
+            signup_query = """
+            INSERT INTO SignUp (Name, email, Pass, Phone)
+            VALUES (%s, %s, %s, %s)
+            """
+            cursor.execute(signup_query, (name, email, Pass, phonenum))
+            database.commit()
+
+            flash("success: Signup successful!", "success")
+            return redirect(url_for('login'))  # Redirect to login page after successful signup
+
+        # If GET request, render signup page (initial request)
+        return render_template('signup.html')
+
+      # Handle the error and re-render the form
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def loginbtn():
+    if request.method == 'POST':
+        try:
+            email = request.form['email']
+            password = request.form['Pass']
+
+            if not email or not password:
+                flash("Email and Password shouldn't be empty", "error")
+            else:
+                # Check user credentials
+                login_query = "SELECT * FROM SignUp WHERE email = %s AND Pass = %s"
+                cursor.execute(login_query, (email, password))
+                user = cursor.fetchone()
+
+                if user:
+                    session['email'] = email
+                    flash("Login successful!", "success")
+                    return redirect(url_for('dashboard'))  # Redirect to dashboard route
+                else:
+                    flash("Email or Password is incorrect!", "error")
+        except Exception as e:
+            flash(f"Login unsuccessful. Error: {e}", "error")
+
+    return render_template('login.html')
+
 
 @app.route('/')
 def forgotpassword():
@@ -129,14 +142,12 @@ def dashboard():
     return render_template('dashboard.html')
 
 
+ # Redirect to lc1 route
 
-@app.route('/newbtn',methods=['GET','POST'])
-def newbtn():
-    return redirect(url_for('LC1.html'))
 
-@app.route('/existingbtn',methods=['GET','POST'])
+@app.route('/existing',methods=['GET','POST'])
 def existing():
-    return redirect(url_for(''))
+    return redirect(url_for('existingpage'))
 
 @app.route('/templatebtn',methods=['GET','POST'])
 def template():
@@ -144,8 +155,9 @@ def template():
 
 
 
-
-    
+@app.route('/existingpage')
+def existings():
+    return render_template('existing.html') 
 
 
 
@@ -156,7 +168,7 @@ def LC1():
 @app.route('/submit',methods=['GET','POST'])
 def submit():
     try:
-        type=request.form['type']
+        types=request.form['types']
         issue_date=request.form['issue_date']
         credit_number=request.form['credit_number']
         expiry_date=request.form['expiry-date']
@@ -205,17 +217,17 @@ def submit():
         Desc21=request.form['Desc21']
         Desc22=request.form['Desc22']
 
-        LC1query="""insert into LC_BANK (type,issue_date,credit_number,expiry_date,expiry_place,applicant_address,beneficiary,currency_amount,variations,credit_type,credit_type1,credit_type2,credit_type3,usance,port_loading,Permit,Prohibit,shipment_from,port_loading,place1,place2,place3,place,latest_shipment,goods1,goods2,Desc1,Desc2,Desc3,Desc4,Desc5,Desc6,Desc7,Desc8,Desc9,Desc10,Desc11,Desc12,Desc13,Desc14,Desc15,Desc16,Desc17,Desc18,Desc19,Desc20,Desc21,Desc22) """
-        values1=(type,issue_date,credit_number,expiry_date,expiry_place,applicant_address,beneficiary,currency_amount,variations,credit_type,credit_type1,credit_type2,credit_type3,usance,port_loading,Permit,Prohibit,shipment_from,port_loading,place1,place2,place3,place,latest_shipment,goods1,goods2,Desc1,Desc2,Desc3,Desc4,Desc5,Desc6,Desc7,Desc8,Desc9,Desc10,Desc11,Desc12,Desc13,Desc14,Desc15,Desc16,Desc17,Desc18,Desc19,Desc20,Desc21,Desc22)
+        LC1query="""insert into LC_BANK (types,issue_date,credit_number,expiry_date,expiry_place,applicant_address,beneficiary,currency_amount,variations,credit_type,credit_type1,credit_type2,credit_type3,usance,port_loading,Permit,Prohibit,shipment_from,port_loading,place1,place2,place3,place,latest_shipment,goods1,goods2,Desc1,Desc2,Desc3,Desc4,Desc5,Desc6,Desc7,Desc8,Desc9,Desc10,Desc11,Desc12,Desc13,Desc14,Desc15,Desc16,Desc17,Desc18,Desc19,Desc20,Desc21,Desc22) """
+        values1=(types,issue_date,credit_number,expiry_date,expiry_place,applicant_address,beneficiary,currency_amount,variations,credit_type,credit_type1,credit_type2,credit_type3,usance,port_loading,Permit,Prohibit,shipment_from,port_loading,place1,place2,place3,place,latest_shipment,goods1,goods2,Desc1,Desc2,Desc3,Desc4,Desc5,Desc6,Desc7,Desc8,Desc9,Desc10,Desc11,Desc12,Desc13,Desc14,Desc15,Desc16,Desc17,Desc18,Desc19,Desc20,Desc21,Desc22)
         cursor.execute(LC1query,values1)
         database.commit()
         flash('Submitted Successfully',"Success")
-        return redirect(url_for('')) #next page
+        return redirect(url_for('existing')) #next page
 
     except Exception as e:
         database.rollback()
         flash(f"Sorry Could't Submit. Error: {e}", "error")
-        return redirect(url_for('LC1.html'))
+        return redirect(url_for('LC1'))
 
 
 @app.route('/logout')
