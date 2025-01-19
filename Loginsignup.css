@@ -1,0 +1,132 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #e0f2f1; /* Light background color */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 95%; /* Increased width for a bigger container */
+  max-width: 700px; /* Increased maximum width */
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 40px 30px; /* Increased padding for more space inside */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  background: #e0f2f1;
+  border-radius: 6px;
+  padding: 10px 15px;
+  height: 50px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.input img {
+  margin-right: 15px;
+  width: 24px;
+  height: 24px;
+}
+
+.input input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 16px;
+  color: #004d40;
+}
+
+.submit-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.submit {
+  flex: 1;
+  max-width: 45%;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  background-color: #00796b;
+  color: white;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit.gray {
+  background-color: #b2dfdb;
+  color: #004d40;
+  cursor: not-allowed;
+}
+
+.submit:hover:not(.gray) {
+  background-color: #004d40;
+}
+
+/* Adjust styles for specific form types (login/signup) */
+.login-container, .signup-container {
+  width: 100%;
+}
+
+.login-container .submit {
+  background-color: #00796b;
+}
+
+.signup-container .submit {
+  background-color: #004d40;
+}
+
+.submit-container {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Optional: style for any extra form fields or message sections */
+.form-message {
+  font-size: 14px;
+  color: #004d40;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.form-message a {
+  color: #00796b;
+  text-decoration: none;
+}
+
+.form-message a:hover {
+  text-decoration: underline;
+}
